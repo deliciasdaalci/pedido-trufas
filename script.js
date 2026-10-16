@@ -13,7 +13,7 @@ const PRECO_PROMOCIONAL = 2.50;
 const QUANTIDADE_MINIMA = 1;
 
 //url do google
-const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbzELvWkLgE2j9axlLgtu5aahpGmysEpSMgIdBDljQ-zBeQpbJ0ssh0d38BuIMrEH-Ev/exec";
+const URL_GOOGLE_SHEETS = "https://muddy-recipe-ea3e.malukete07.workers.dev/";
 
 /* ========================================
    ELEMENTOS DA PÁGINA
@@ -22,17 +22,15 @@ const URL_GOOGLE_SHEETS = "https://script.google.com/macros/s/AKfycbzELvWkLgE2j9
 const botaoDiminuir = document.getElementById("diminuir");
 const botaoAumentar = document.getElementById("aumentar");
 const quantidadeElemento = document.getElementById("quantidade");
-const quantidadeResumo = document.getElementById("quantidadeResumo");
+const quantidadeResumo = document.getElementById("quantidade");
 const valorTotalElemento = document.getElementById("valorTotal");
-
 const campoNome = document.getElementById("nome");
 const campoTelefone = document.getElementById("telefone");
-
 const campoPix = document.getElementById("chavePix");
 const botaoCopiarPix = document.getElementById("copiarPix");
 const mensagemPix = document.getElementById("mensagemPix");
-
 const botaoConcluir = document.getElementById("concluirCompra");
+const bordaQuantidade = document.getElementById("bordaQuantidade");
 
 let quantidadeAtual = 1;
 
@@ -59,6 +57,7 @@ function formatarMoeda(valor) {
 }
 
 function atualizarPagina() {
+ // botaoConcluir.disabled = false;
   const total = obterTotal();
 
   quantidadeElemento.textContent = quantidadeAtual;
@@ -120,6 +119,7 @@ campoTelefone.addEventListener("input", function () {
 
   this.value = numeros;
 });
+
 
 /* ========================================
    COPIAR CHAVE PIX
@@ -223,8 +223,56 @@ document.addEventListener("keydown", function (evento) {
 });
 
 
-////evento limpar e mostra mensagem fim
-botaoConcluir.addEventListener("click", function () {
+
+const chavePixDialog = document.getElementById("chavePixDialog");
+const copiarPixDialog = document.getElementById("copiarPixDialog");
+const mensagemCopiaPixDialog = document.getElementById("mensagemCopiaPixDialog");
+
+// Exibe a mesma chave PIX já utilizada no site.
+chavePixDialog.value = CHAVE_PIX;
+
+
+copiarPixDialog.addEventListener("click", async function () {
+  try {
+    await navigator.clipboard.writeText(CHAVE_PIX);
+
+    mensagemCopiaPixDialog.textContent =
+      "Chave PIX copiada com sucesso!";
+
+  } catch (erro) {
+    // Alternativa para navegadores que não permitem a cópia direta.
+    chavePixDialog.focus();
+    chavePixDialog.select();
+
+    const copiou = document.execCommand("copy");
+
+    mensagemCopiaPixDialog.textContent = copiou
+      ? "Chave PIX copiada com sucesso!"
+      : "Selecione e copie a chave PIX manualmente.";
+  }
+});
+
+
+//alternativa com botao inicio
+
+let urlWhatsAppAlternativo = "";
+
+const avisoFalhaPedido = document.getElementById("avisoFalhaPedido");
+const mensagemFalhaPedido = document.getElementById("mensagemFalhaPedido");
+const botaoEnviarWhatsApp = document.getElementById("botaoEnviarWhatsApp");
+
+
+botaoEnviarWhatsApp.addEventListener("click", function () {
+  if (urlWhatsAppAlternativo) {
+    //atualizarPagina();//atualiza pagina
+    window.open(urlWhatsAppAlternativo, "_blank");
+    window.location.reload();
+  }
+});
+//alternativa com botao fim
+
+
+botaoConcluir.addEventListener("click", async function () {
   const nome = campoNome.value.trim();
   const telefone = campoTelefone.value.trim();
 
@@ -238,6 +286,17 @@ botaoConcluir.addEventListener("click", function () {
   }
 
   campoNome.setCustomValidity("");
+
+  if (!telefone) {
+    campoTelefone.setCustomValidity(
+      "Por favor, informe seu número de WhatsApp para continuar."
+    );
+    campoTelefone.reportValidity();
+    campoTelefone.focus();
+    return;
+  }
+
+  campoTelefone.setCustomValidity("");
 
   if (
     !WHATSAPP_LOJA ||
@@ -259,9 +318,7 @@ botaoConcluir.addEventListener("click", function () {
     "Olá! Segue a confirmação do meu pedido de trufas.",
     "",
     "👤 *Nome:* " + nomeSeguro,
-    telefone
-      ? "📱 *Meu WhatsApp:* " + telefone
-      : "",
+    "📱 *Meu WhatsApp:* " + telefone,
     "",
     "🍫 *Quantidade:* " + quantidade + " trufa(s)",
     "💰 *Valor unitário:* " + formatarMoeda(precoUnitario),
@@ -271,22 +328,21 @@ botaoConcluir.addEventListener("click", function () {
       ? "🎉 Desconto promocional aplicado!"
       : "ℹ️ Valor referente a uma unidade.",
     "",
-   "💰 *Chave PIX:* " + CHAVE_PIX,
-    //"",
+    "💰 *Chave PIX:* " + CHAVE_PIX,
     "",
     "_Mensagem gerada automaticamente pelo sistema._"
-  ].filter(Boolean).join("\n");
+  ].join("\n");
 
   const url =
     "https://wa.me/" +
     WHATSAPP_LOJA +
     "?text=" +
     encodeURIComponent(mensagem);
+  
+  urlWhatsAppAlternativo = url;//alternativa com botao
+  avisoFalhaPedido.style.display = "none";//alternativa com botao
 
-
-  const janela =window.open(url, "_blank");//caso tenha que tirar remover a variavel janela
-
-   // Prepara os dados que serão enviados à planilha.
+  // Prepara os dados do pedido.
   const dados = new URLSearchParams({
     nome: nome,
     telefone: telefone,
@@ -295,32 +351,71 @@ botaoConcluir.addEventListener("click", function () {
     valorTotal: total.toFixed(2)
   });
 
-  // Envia o registro ao Google Sheets.
-  // O modo no-cors não permite confirmar a gravação
-  // pela resposta do servidor.
-  const envioPlanilha = fetch(URL_GOOGLE_SHEETS, {
-    method: "POST",
-    mode: "no-cors",
-    body: dados
-  }).catch(function (erro) {
-    console.error("Falha ao enviar o pedido à planilha:", erro);
-  });
+  // Impede cliques repetidos durante o envio.
+  botaoConcluir.disabled = true;
+  botaoDiminuir.disabled = true;
+  botaoAumentar.disabled = true;
+//esse espaço é local para desabilitar os botoes
 
-  ////evento limpar e mostra mensagem fim
-  if (janela) {
-    janela.location.href = url;//acrescentado para envio planilha
+  
+  try {
+    const resposta = await fetch(
+      URL_GOOGLE_SHEETS,
+      {
+        method: "POST",
+        body: dados
+      }
+    );
+    //throw new Error("Falha simulada para teste");
+
+    let resultado;
+
+    try {
+      resultado = await resposta.json();
+    } catch (erro) {
+      throw new Error("Resposta inválida do servidor.");
+    }
+
+    if (!resposta.ok || resultado.sucesso !== true) {
+      throw new Error(
+        resultado.erro || "Não foi possível confirmar o pedido."
+      );
+    }
+
+    // Pedido confirmado pelo Google Apps Script.
+    avisoFalhaPedido.style.display = "none";//alternativa com botao
     limparPedido();
     mostrarSucesso();
-  } else {
 
-    // Se o navegador bloquear a nova aba, aguarda
-    // o envio ser tentado antes de redirecionar.
-    envioPlanilha.finally(function () {
-      window.location.href = url;
-    });
+  } catch (erro) {
+  console.error("Falha ao confirmar o pedido:", erro);
 
+  //desativa cores e açoes nos botoes INICIO
+  botaoConcluir.style.backgroundColor = "#cccccc";
+  botaoConcluir.style.cursor="not-allowed";
+  botaoConcluir.style.pointerEvents= "none";
+  bordaQuantidade.style.borderColor="#cccccc";
+  botaoDiminuir.style.color="#cccccc";
+  botaoAumentar.style.color="#cccccc";
+  quantidadeElemento.style.color="#cccccc";
+  //desativa cores e açoes nos botoes FIM
+
+  mensagemFalhaPedido.textContent =
+  "Não conseguimos registrar o seu pedido. " +
+  "Por favor envie seu pedido pelo WhatsApp. Clique abaixo.";
+
+  avisoFalhaPedido.style.display = "block";
+
+  avisoFalhaPedido.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+
+  } finally {
+    botaoConcluir.disabled = false;
+    botaoDiminuir.disabled = false;
+    botaoAumentar.disabled = false;
   }
-  ////evento limpar e mostra mensagem fim
 
 });
 
@@ -329,6 +424,11 @@ botaoConcluir.addEventListener("click", function () {
 ======================================== */
 
 campoNome.addEventListener("input", function () {
+  this.setCustomValidity("");
+});
+
+//para apagar mensagem de digitar telefone
+campoTelefone.addEventListener("input", function () {
   this.setCustomValidity("");
 });
 
