@@ -27,7 +27,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.2;/*1.5*//*espaçamento das linhas*/
 }
 
 button,
@@ -40,12 +40,19 @@ button {
   touch-action: manipulation;
 }
 
+button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events: none; /* Bloqueia cliques e interações do mouse */
+}
+
 .pagina {
   width: 100%;
   max-width: 560px;
   margin: 0 auto;
   padding: 0 16px calc(190px + env(safe-area-inset-bottom));
- 
+  margin-bottom: 20px;
 }
 
 header {
@@ -59,7 +66,6 @@ header {
   justify-content: space-between;
   background: var(--vinho);
   color: white;
-
   border-bottom: 5px solid #f7f2ed;
 }
 
@@ -97,6 +103,7 @@ header {
   border-radius: 19px;
   box-shadow: var(--sombra);
   margin-bottom: 17px;
+  line-height: 1.2;/*inserir para teste*/
 }
 
 .foto-container {
@@ -165,7 +172,7 @@ header {
 }
 
 .preco-item span {
-  font-size: 12px;
+  font-size: 10px;/*12px*/
   color: var(--texto-suave);
 }
 
@@ -361,8 +368,13 @@ input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
   margin-bottom: 8px;
+}
+
+.linha-acao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .resumo-total {
@@ -376,63 +388,81 @@ input:focus {
   line-height: 1.3;
 }
 
-.total {
-  margin-top: 2px;
-  color: var(--vinho);
+.total2 {
+  margin-top: 0px;
+  color: #ffffff;
   font-size: clamp(23px, 6vw, 29px);
-  font-weight: 850;
-  line-height: 1.2;
-  letter-spacing: -0.7px;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: 0.8px;
+}
+.total2 {
+  font-size: 16px;/*23px*/
 }
 
-.controle-quantidade {
+.total {
+  margin-top: 0px;
+  /*color: var(--vinho);*/
+  color: #ffffff;
+  font-size: clamp(23px, 6vw, 29px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0.8px;
+}
+
+.controle-quantidade {/*borda exterior da quantidades*/
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 0px;/*9px*/
+  border: 2px solid var(--vinho);
+  border-radius: 10px;
+  line-height: 0.9;
+  padding: 3px;
+
 }
 
 .controle-quantidade button {
-  display: grid;
-  place-items: center;
-  flex: 0 0 43px;
+  border: none;              /* Remove a borda padrão */
+  background-color: transparent; /* Remove a cor de fundo */
+  color: var(--vinho);
+  font-size: 30px;/*26px*/
+  padding: 0;
+  flex: 0 0 30px;
   width: 43px;
   height: 43px;
-  padding: 0;
-  border: 1px solid #dfc9c2;
-  border-radius: 12px;
-  background: var(--creme);
-  color: var(--vinho);
-  font-size: 26px;
-  font-weight: 500;
-}
-
-.controle-quantidade button:active {
-  background: var(--rosa);
-  transform: scale(0.96);
-}
-
-.quantidade {
   display: grid;
   place-items: center;
-  width: 47px;
-  height: 43px;
-  border: 2px solid var(--vinho);
-  border-radius: 10px;
+  font-weight: 800;
+
+}
+
+.controle-quantidade button:active {/*efeito click botao +/-*/
+  background: var(--rosa);
+  border-radius: 30%;
+  transform: scale(0.96);
+}
+.quantidade {/*botao quantidade*/
+  display: grid;
+  place-items: center;
+  width: 70px;/*47px;*/
+  height: 43px;/*43px*/
   background: #fff;
-  color: var(--vinho);
-  font-size: 18px;
+  color:var(--vinho);
+  font-size: 22px;/*18px*/
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
-.botao-whatsapp {
-  display: flex;
+.botao-whatsapp {/*botao conclui*/
+  display: inline-flex;/*flex;*/
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
+  gap: 0px;/*10px*/
+  flex: 1;
+  min-width: 0;
   min-height: 53px;
-  padding: 12px 10px;
+  padding: 0;
   border: 0;
   border-radius: 13px;
   background: var(--verde);
@@ -440,13 +470,6 @@ input:focus {
   font-size: 16px;
   font-weight: 800;
   box-shadow: 0 4px 10px rgba(22, 139, 81, 0.18);
-}
-
-.botao-whatsapp svg {
-  flex: 0 0 23px;
-  width: 23px;
-  height: 23px;
-  fill: currentColor;
 }
 
 .botao-whatsapp:active {
@@ -488,7 +511,7 @@ input:focus {
   }
 
   .total {
-    font-size: 23px;
+    font-size: 23px;/*23px*/
   }
 
   .botao-whatsapp {
@@ -616,5 +639,275 @@ input:focus {
   }
 }
 
+#dialogSucesso #chavePixDialog {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 13px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 9px;
+  background: #f7f7f7;
+  color: #222222;
+  font-size: 14px;
+  text-align: center;
+  outline-offset: 2px;
+}
+
+/* Ajustes para telas pequenas */
+/*
+@media (max-width: 380px) {
+  #dialogSucesso.dialog-overlay {
+    padding: 12px;
+  }
+
+  #dialogSucesso .dialog-conteudo {
+    padding: 22px 16px;
+    max-height: calc(100vh - 24px);
+  }
+
+  #dialogSucesso .dialog-conteudo h2 {
+    font-size: 21px;
+  }
+}*/
+
+/* Botão de confirmação ALERT DIALOG*/
+/*
+.dialog-botao {
+  width: 100%;
+  min-height: 49px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #6b241f, #84352e);
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 750;
+
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.dialog-botao:active {
+  transform: scale(0.98);
+}
+
+.dialog-botao:focus-visible {
+  outline: 3px solid #c89a8f;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-overlay,
+  .dialog-card {
+    transition: none;
+  }
+}
+
+*/
 /* Botão de confirmação ALERT DIALOG*/
 
+/* Fundo escuro atrás do diálogo */
+/*
+#dialogSucesso.dialog-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.65);
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+/* Caixa principal do diálogo */
+/*
+#dialogSucesso .dialog-conteudo {
+  width: 100%;
+  max-width: 400px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 28px 22px;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #333333;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  animation: dialogEntrada 0.25s ease-out;
+}
+
+/* Título */
+/*
+#dialogSucesso .dialog-conteudo h2 {
+  margin: 0 0 16px;
+  color: #218838;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+/* Textos */
+/*
+#dialogSucesso .dialog-conteudo p {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* Rótulo da chave PIX */
+/*
+#dialogSucesso .dialog-conteudo label {
+  display: block;
+  margin: 20px 0 8px;
+  color: #444444;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* Campo da chave PIX */
+/*
+#dialogSucesso #chavePixDialog {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 13px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 9px;
+  background: #f7f7f7;
+  color: #222222;
+  font-size: 14px;
+  text-align: center;
+  outline-offset: 2px;
+}
+
+/* Botões do diálogo */
+/*
+#dialogSucesso .dialog-conteudo button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+  padding: 14px 12px;
+  border: none;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+/* Botão copiar PIX */
+
+#dialogSucesso #copiarPixDialog {
+  background: #198754;
+  color: #ffffff;
+}
+
+/* Botão fechar */
+/*
+#dialogSucesso #fecharDialog {
+  background: #eeeeee;
+  color: #333333;
+}
+
+/* Efeito ao passar o mouse */
+/*
+#dialogSucesso .dialog-conteudo button:hover {
+  filter: brightness(0.94);
+}
+
+/* Confirmação da cópia */
+
+#dialogSucesso #mensagemCopiaPixDialog {
+  margin: 10px 0 0;
+  color: #198754;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Entrada suave */
+/*
+@keyframes dialogEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Ajustes para telas pequenas */
+/*
+@media (max-width: 380px) {
+  #dialogSucesso.dialog-overlay {
+    padding: 12px;
+  }
+
+  #dialogSucesso .dialog-conteudo {
+    padding: 22px 16px;
+    max-height: calc(100vh - 24px);
+  }
+
+  #dialogSucesso .dialog-conteudo h2 {
+    font-size: 21px;
+  }
+}
+
+/* Estilos para area de envio whatsaap erro*/
+#botaoEnviarWhatsApp{
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px 12px;
+      border: none;
+      border-radius: 8px;
+      background: #25D366;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-align: center;
+      cursor: pointer;
+}
+#mensagemFalhaPedido{
+    margin: 0 0 18px;
+    color: #654f43;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#avisoWhatsapp-erro{
+    margin: 0 0 8px;
+    color: #803d20;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+#logoErro{
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+#avisoFalhaPedido{
+  display: none;
+  margin: 20px 0;
+  padding: 20px 16px;
+  background: #fff8f0;
+  border: 1px solid #f0d5bd;
+  border-radius: 12px;
+  text-align: center;
+  box-sizing: border-box;
+}
