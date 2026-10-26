@@ -5,6 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#6b241f">
+  
+  <link rel="manifest" href="./manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Delícias da Alci">
+  <link rel="apple-touch-icon" href="src/icone-192.png">
+
   <meta name="description" content="Peça suas trufas artesanais pelo WhatsApp.">
   <title>Trufas Delícias da Alci</title>
   <link rel="icon" type="image/png" href="src/ico.png">
@@ -12,6 +19,16 @@
 </head>
 
 <body>
+
+<div id="carregamentoPedido" class="carregamento-overlay"
+     aria-hidden="true">
+  <div class="carregamento-conteudo" role="status"
+       aria-live="polite">
+    <div class="spinner"></div>
+    <p>Processando seu pedido...</p>
+    <span>Aguarde um instante</span>
+  </div>
+</div>
 
 <header>
     <div>
@@ -23,6 +40,9 @@
     </div>
     <div class="brand">Delícias <span>da Alci</span></div>
     <div class="brand2">Trufas <br>artesanais<br></div>
+    
+
+
 </header>
   <main class="pagina">
     <section class="produto">
@@ -183,7 +203,8 @@
     readonly
     aria-label="Chave PIX para pagamento"
   />
-
+ <!--label for="chavePixDialog"></label-->
+ <label id="labelEspace"></label>
   <button type="button" id="copiarPixDialog">
     📋 Copiar chave PIX
   </button>
