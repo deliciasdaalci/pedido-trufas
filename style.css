@@ -654,176 +654,33 @@ input:focus {
   outline-offset: 2px;
 }
 
-/* Ajustes para telas pequenas */
-/*
-@media (max-width: 380px) {
-  #dialogSucesso.dialog-overlay {
-    padding: 12px;
-  }
-
-  #dialogSucesso .dialog-conteudo {
-    padding: 22px 16px;
-    max-height: calc(100vh - 24px);
-  }
-
-  #dialogSucesso .dialog-conteudo h2 {
-    font-size: 21px;
-  }
-}*/
-
-/* Botão de confirmação ALERT DIALOG*/
-/*
-.dialog-botao {
-  width: 100%;
-  min-height: 49px;
-  padding: 12px;
-
-  border: none;
-  border-radius: 12px;
-
-  background: linear-gradient(135deg, #6b241f, #84352e);
-  color: #fff;
-
-  font-size: 16px;
-  font-weight: 750;
-
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.dialog-botao:active {
-  transform: scale(0.98);
-}
-
-.dialog-botao:focus-visible {
-  outline: 3px solid #c89a8f;
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dialog-overlay,
-  .dialog-card {
-    transition: none;
-  }
-}
-
-*/
-/* Botão de confirmação ALERT DIALOG*/
-
-/* Fundo escuro atrás do diálogo */
-/*
-#dialogSucesso.dialog-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.65);
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-}
-
-/* Caixa principal do diálogo */
-/*
-#dialogSucesso .dialog-conteudo {
-  width: 100%;
-  max-width: 400px;
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding: 28px 22px;
-  border-radius: 18px;
-  background: #ffffff;
-  color: #333333;
-  text-align: center;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-  animation: dialogEntrada 0.25s ease-out;
-}
-
-/* Título */
-/*
-#dialogSucesso .dialog-conteudo h2 {
-  margin: 0 0 16px;
-  color: #218838;
-  font-size: 24px;
-  line-height: 1.3;
-}
-
-/* Textos */
-/*
-#dialogSucesso .dialog-conteudo p {
-  margin: 0 0 14px;
-  font-size: 15px;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-
-/* Rótulo da chave PIX */
-/*
-#dialogSucesso .dialog-conteudo label {
-  display: block;
-  margin: 20px 0 8px;
-  color: #444444;
-  font-size: 14px;
-  font-weight: 700;
-  text-align: left;
-}
-
-/* Campo da chave PIX */
-/*
-#dialogSucesso #chavePixDialog {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  padding: 13px 12px;
-  border: 1px solid #d6d6d6;
-  border-radius: 9px;
-  background: #f7f7f7;
-  color: #222222;
-  font-size: 14px;
-  text-align: center;
-  outline-offset: 2px;
-}
-
-/* Botões do diálogo */
-/*
-#dialogSucesso .dialog-conteudo button {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 12px;
-  padding: 14px 12px;
-  border: none;
-  border-radius: 9px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: filter 0.2s ease, transform 0.2s ease;
-}
-
 /* Botão copiar PIX */
 
 #dialogSucesso #copiarPixDialog {
+  /*
   background: #198754;
-  color: #ffffff;
+  color: #ffffff;*/
+  flex-shrink: 0;
+  min-width: 83px;
+  /*padding: 0 13px;*/
+  padding: 10px;
+  border: 0;
+  border-radius: 11px;
+  background: #e4f5ec;
+  color: #147548;
+  font-size: 14px;
+  font-weight: 800;
 }
 
-/* Botão fechar */
-/*
-#dialogSucesso #fecharDialog {
-  background: #eeeeee;
-  color: #333333;
+
+#copiarPixDialog:active {
+  transform: scale(0.97);
 }
 
-/* Efeito ao passar o mouse */
-/*
-#dialogSucesso .dialog-conteudo button:hover {
-  filter: brightness(0.94);
+#labelEspace{
+  display: block;
+  margin-top: 6px;
+  font-size: 0px;
 }
 
 /* Confirmação da cópia */
@@ -833,37 +690,6 @@ input:focus {
   color: #198754;
   font-size: 14px;
   font-weight: 600;
-}
-
-/* Entrada suave */
-/*
-@keyframes dialogEntrada {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Ajustes para telas pequenas */
-/*
-@media (max-width: 380px) {
-  #dialogSucesso.dialog-overlay {
-    padding: 12px;
-  }
-
-  #dialogSucesso .dialog-conteudo {
-    padding: 22px 16px;
-    max-height: calc(100vh - 24px);
-  }
-
-  #dialogSucesso .dialog-conteudo h2 {
-    font-size: 21px;
-  }
 }
 
 /* Estilos para area de envio whatsaap erro*/
@@ -910,4 +736,58 @@ input:focus {
   border-radius: 12px;
   text-align: center;
   box-sizing: border-box;
+}
+
+
+/* Tela de carregamento do pedido */
+.carregamento-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.carregamento-overlay.ativo {
+  display: flex;
+}
+
+.carregamento-conteudo {
+  width: min(280px, 100%);
+  padding: 28px 20px;
+  text-align: center;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 18px;
+  border: 5px solid #f0d9d5;
+  border-top-color: #6b241f;
+  border-radius: 50%;
+  animation: girarSpinner 0.8s linear infinite;
+}
+
+.carregamento-conteudo p {
+  margin: 0 0 8px;
+  color: #6b241f;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.carregamento-conteudo span {
+  color: #666;
+  font-size: 13px;
+}
+
+@keyframes girarSpinner {
+  to {
+    transform: rotate(360deg);
+  }
 }
