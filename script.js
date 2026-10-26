@@ -32,6 +32,10 @@ const mensagemPix = document.getElementById("mensagemPix");
 const botaoConcluir = document.getElementById("concluirCompra");
 const bordaQuantidade = document.getElementById("bordaQuantidade");
 
+
+const carregamentoPedido = document.getElementById("carregamentoPedido");
+
+
 let quantidadeAtual = 1;
 
 
@@ -355,7 +359,10 @@ botaoConcluir.addEventListener("click", async function () {
   botaoConcluir.disabled = true;
   botaoDiminuir.disabled = true;
   botaoAumentar.disabled = true;
-//esse espaço é local para desabilitar os botoes
+
+  carregamentoPedido.classList.add("ativo");
+  carregamentoPedido.setAttribute("aria-hidden", "false");
+  //esse espaço é local para desabilitar os botoes
 
   
   try {
@@ -412,6 +419,9 @@ botaoConcluir.addEventListener("click", async function () {
   });
 
   } finally {
+    carregamentoPedido.classList.remove("ativo");
+    carregamentoPedido.setAttribute("aria-hidden", "true");
+
     botaoConcluir.disabled = false;
     botaoDiminuir.disabled = false;
     botaoAumentar.disabled = false;
